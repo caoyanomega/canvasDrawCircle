@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        #enter {
+            border: 1px solid black;
+            margin: 0 auto;
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+            width: 1300px;
+        }
+
+        #enter table {
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+        #enter table td {
+
+        }
+
+        #enter .control {
+            margin: 5px auto;
+            text-align: center;
+        }
+
+        #enter .disc{
+            text-align: center;
+        }
+
+        #enter .control input {
+            padding: 5px;
+        }
+
+        #enter .control #addNum {
+            width: 30px;
+        }
+
+        #enter .control #submit {
+            border: 2px solid green;
+            color: white;
+            background: deepskyblue;
+        }
+
+        #enter .center {
+            border: 1px solid;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 1220px;
+        }
+
+        #enter .center table {
+            float: left;
+            margin: 5px;
+            width: 600px;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="1000"  height="800"></canvas>
+<div id="enter">
+    <div class="control">
+        <input type="button" id="addTen" value="一键批量添加数据="><input type="text" value="10" id="addNum"/></input>
+        <input type="button" id="add" value="添加一条数据"/>
+        <input type="button" id="submit" value="生成图像"/>
+        <input type="button" id="deleteAll" value="一键删除所有数据"/>
+        <input type="button" id="deleteOne" value="倒序逐条删除数据"/>
+
+    </div>
+
+    <div class="center">
+        <table border="1px" width="" class="table" cellpadding="5" cellspacing="5">
+            <caption>属性设置</caption>
+            <thead id="thead">
+            <th>编号</th>
+            <th>描述</th>
+            <th>数值</th>
+            </thead>
+            <tbody class="tbody" id="set">
+            <tr>
+                <td>1</td>
+                <td>canvas宽度(无单位,可缺省)</td>
+                <td><input type="text" id="canvasWidth" value="" list="canvasWidthList"/></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>canvas高度(无单位,可缺省)</td>
+                <td><input type="text" value="" id="canvasHeight" list="canvasHeightList"/></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>圆心x轴坐标(无单位,可缺省)</td>
+                <td><input type="text" value="" id="x0"/></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>圆心y轴坐标(无单位,可缺省)</td>
+                <td><input type="text" value="" id="y0"/></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>圆半径(无单位,可缺省)</td>
+                <td><input type="text" value="200" id="radius" list="radiusList"/></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>动画分为几步完成(无单位)</td>
+                <td><input type="text" value="10" id="time" list="timeList"/></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>每次动画时间间隔(无单位)</td>
+                <td><input type="text" value="100" id="speed" list="speedList"/></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>是否使用动画(true/false)</td>
+                <td id="useAnimate">
+                    <!--<input type="text" value="true" id="useAnimate"/>-->
+                    true<input type="radio" value="true" name="useAnimate" checked/>false<input type="radio"
+                                                                                                value="false"
+                                                                                                name="useAnimate"/>
+                </td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>是否同步动画(true/false)</td>
+                <td id="startAll">
+                    <!--<input type="text" value="true" id="startAll"/>-->
+                    true<input type="radio" value="true" name="startAll" checked/>false<input type="radio" value="false"
+                                                                                              name="startAll"/>
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>圆外延线的长度(无单位)</td>
+                <td><input type="text" value="100" id="disLength" list="disLengthList"/></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>外延线lineWidth(无单位)</td>
+                <td><input type="text" value="5" id="lineWidth"/></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>字体:font</td>
+                <td><input type="text" value="20px 黑体" id="discFont"/></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>动画是否有锯齿(true/false)</td>
+                <td id="haveSaw">
+                    <!--<input type="text" value="true" id="haveSaw"/>-->
+                    true<input type="radio" value="true" name="haveSaw"/>false<input type="radio" value="false"
+                                                                                     name="haveSaw" checked/>
+                </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>是否使用随机颜色(true/false)</td>
+                <td id="useRandomColor">
+                    <!--<input type="text" value="true" id="useRandomColor"/>-->
+                    true<input type="radio" value="true" name="useRandomColor" checked/>false<input type="radio"
+                                                                                                    value="false"
+                                                                                                    name="useRandomColor"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--datalist存放专用-->
+
+        <datalist id="canvasWidthList">
+            <option value="1500">1500</option>
+            <option value="1200">1200</option>
+            <option value="1000">1000</option>
+            <option value="800">800</option>
+            <option value="600">600</option>
+        </datalist>
+
+        <datalist id="canvasHeightList">
+            <option value="1500">1500</option>
+            <option value="1200">1200</option>
+            <option value="1000">1000</option>
+            <option value="800">800</option>
+            <option value="600">600</option>
+        </datalist>
+
+        <datalist id="radiusList">
+            <option value="400">400</option>
+            <option value="300">300</option>
+            <option value="200">200</option>
+            <option value="100">100</option>
+            <option value="50">50</option>
+        </datalist>
+
+        <datalist id="disLengthList">
+            <option value="500">500</option>
+            <option value="300">300</option>
+            <option value="100">10</option>
+            <option value="50">50</option>
+            <option value="20">20</option>
+        </datalist>
+
+        <datalist id="timeList">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </datalist>
+
+        <datalist id="speedList">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+        </datalist>
+
+        <table id="table" border="1px" width="" class="table" cellpadding="5" cellspacing="5">
+            <caption>数据设置</caption>
+            <thead class="thead">
+            <th>编号</th>
+            <th>数值(必填*)</th>
+            <th>描述</th>
+            <th>颜色</th>
+            <th>操作</th>
+            </thead>
+            <tbody id="tbody">
+            <tr>
+                <td>0</td>
+                <td><input type="text" value="1"/></td>
+                <td><input type="text" value="这是一段介绍"/></td>
+                <td><input type="color"/></td>
+                <td><a href="#">delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--使用说明-->
+    <div class="disc">
+        <h3>面向对象-动态饼状图封装使用说明</h3>
+        <pre style="text-align: left">
+            版本：Version:XXX. 时间：2017.01.10
+            说明：该版本相对于上一次进行了大更新：主要有以下几点：
+            1.大换血，将传统的JS注入对象改为前台页面手动注入对象,增加了注入批量注入对象、批量删除对象等DOM操作。可视化程度大幅度提高,提高用户体验度和满意度。
+              小白也能操作制作饼状图了
+            2.该框架实际上并不是面向对象的，只是封装成为函数方便使用罢了，其中不少内容还可以再度进行封装和优化,然而由于时间问题，
+              本人并不打算再做进一步的封装了。比如,没有什么css样式,也没有做任何的输入验证。大部分输入框都只能填数字,或者干脆使用input:number标签算了。
+            3.本次封装完全使用原生的JS实现,代码量仅有700多行,但却修改了5次+,用时3天,极大地锻炼的自己的能力：
+              canvas画布的熟练使用+原生DOM操作+对象属性的注如+函数的封装,  实际工作中还是建议使用别人的框架如Konva等。
+
+            功能介绍：
+            一.左侧属性设置：
+              -1.canvasWidth:可设置canvas的宽度,无单位,可缺省,数字
+              -2.canvasHeight:可设置canvas的高度,无单位,可缺省,数字
+              -3.圆心x轴坐标(无单位,可缺省):下面没什么好说的
+              -4.圆心y轴坐标(无单位,可缺省):
+              -5.圆半径(无单位,可缺省)：
+              -6.动画分为几步完成(无单位)：
+              -7.每次动画时间间隔(无单位)：
+              -8.是否使用动画(true/false)	：当禁用动画时(该值为false)，同步动画属性无效。
+              -9.是否同步动画(true/false)：所谓同步动画即使我自己理解的--多个扇形图同时绘画。其实是使用多个setTimeout+SetInterval实现。
+                 因为这两个方法完全是异步的,脱离主线程。
+              -10.圆外延线的长度(无单位)：
+              -11.外延线lineWidth(无单位):
+              -12.字体:font:
+              -13.动画是否有锯齿(true/false):所谓锯齿就是白色描边。因为该动画使用计时器分步完成，所以导致每一段扇形图的起始半径和闭合半径如果不是
+                 水平或者垂直的话，系统就会自带白边。
+                 禁用锯齿(false)就是另一种实现原理了---每一次都从每一大块扇形图的起点开始描绘，而不会从每一大块中的没一小块的起点开始画。
+              -14.是否使用随机颜色(true/false):颜色输入框相对于用户的体验度比较差,所以我们建议使用默认的随即颜色(也好不到哪里去);
+
+            二.右侧数据设置：
+              -1.用户完全可以自定义数值(自动分配比例)、颜色、描述。也可以批量添加删除数据。
+
+        </pre>
+    </div>
+</div>
+<script src="./main.js"></script>
+</body>
+</html>
